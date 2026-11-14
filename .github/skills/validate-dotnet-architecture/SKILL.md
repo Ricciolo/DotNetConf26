@@ -1,7 +1,6 @@
 ---
 name: validate-dotnet-architecture
 description: Validate project dependency directions, repository build conventions and .NET tests. Use after modifying projects, package references, architecture or when reviewing a pull request.
-license: MIT
 compatibility: Requires .NET SDK 11
 metadata:
   author: dotnet-conf-italia

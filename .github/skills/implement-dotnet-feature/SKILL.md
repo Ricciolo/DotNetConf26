@@ -1,7 +1,6 @@
 ---
 name: implement-dotnet-feature
 description: Implement or extend an ASP.NET Core Orders feature while respecting layered architecture, domain invariants and executable tests. Use when adding endpoints, application operations or business rules.
-license: MIT
 compatibility: Requires .NET SDK 11 and a shell
 metadata:
   author: dotnet-conf-italia
