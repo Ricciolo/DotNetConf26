@@ -52,4 +52,4 @@ app.MapPost("/orders", async (
 app.Run();
 
 // Enables WebApplicationFactory<Program> for integration tests.
-public partial class Program;
+public partial class Program { }

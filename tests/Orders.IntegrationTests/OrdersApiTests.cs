@@ -1,3 +1,4 @@
+using Xunit;
 using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -32,9 +33,9 @@ public sealed class OrdersApiTests : IClassFixture<WebApplicationFactory<Program
         using HttpResponseMessage response = await _client.PostAsJsonAsync("/orders", request);
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        Assert.NotNull(response.Headers.Location);
+        Uri location = Assert.IsType<Uri>(response.Headers.Location);
 
-        using HttpResponseMessage getResponse = await _client.GetAsync(response.Headers.Location);
+        using HttpResponseMessage getResponse = await _client.GetAsync(location);
         Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
     }
 

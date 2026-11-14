@@ -1,3 +1,4 @@
+using Xunit;
 using System.Xml.Linq;
 using Orders.Application;
 using Orders.Domain;
@@ -50,7 +51,7 @@ public sealed class DependencyRulesTests
             .Where(name => name.StartsWith("Orders.", StringComparison.Ordinal))
             .ToArray();
 
-        Assert.Equal(["Orders.Domain"], references.OrderBy(name => name).ToArray());
+        Assert.Equal(new[] { "Orders.Domain" }, references.OrderBy(name => name).ToArray());
     }
 
     [Fact]
