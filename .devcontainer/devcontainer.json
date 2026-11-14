@@ -1,0 +1,27 @@
+{
+  "name": "DotNetConf26 - .NET 11",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "vscode",
+  "forwardPorts": [5080],
+  "portsAttributes": {
+    "5080": {
+      "label": "Orders API"
+    }
+  },
+  "postCreateCommand": "dotnet restore DotNetConf26.slnx",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "DotNetConf26.slnx"
+      }
+    }
+  }
+}
