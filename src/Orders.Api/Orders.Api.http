@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:5080
+
+GET {{baseUrl}}/health
+
+###
+
+GET {{baseUrl}}/orders
+
+###
+
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customer": "Ada Lovelace",
+  "lines": [
+    { "sku": "BOOK-001", "quantity": 2, "unitPrice": 12.50 }
+  ]
+}

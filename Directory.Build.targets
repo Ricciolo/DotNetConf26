@@ -1,0 +1,10 @@
+<Project>
+  <Target Name="EnforceAgentReadyRepositorySettings" BeforeTargets="CoreCompile">
+    <Error Condition="'$(TargetFramework)' != 'net11.0'"
+           Text="All projects must target net11.0. Update global.json and repository guidance before changing this." />
+    <Error Condition="'$(Nullable)' != 'enable'"
+           Text="Nullable reference types must stay enabled." />
+    <Error Condition="'$(TreatWarningsAsErrors)' != 'true'"
+           Text="TreatWarningsAsErrors must stay enabled." />
+  </Target>
+</Project>
