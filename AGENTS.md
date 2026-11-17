@@ -31,6 +31,7 @@ See `docs/architecture.md`, `docs/domain.md` and `docs/testing.md` for detail.
 - Shared build conventions in `Directory.Build.props` and `Directory.Build.targets`.
 - Central package versions in `Directory.Packages.props`; do not put Version attributes on project PackageReference elements.
 - Formatting and C# conventions in `.editorconfig`.
+- CSharpier 1.4.0 is pinned in `.config/dotnet-tools.json`. Run `dotnet tool restore`, then `dotnet csharpier format src tests` for formatting or `dotnet csharpier check src tests` to validate formatting. Do not add global tool installation instructions.
 - Do not disable analyzers, change SDK/TFM or weaken test assertions to make a change pass.
 
 ## Skills and specialists

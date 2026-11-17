@@ -11,7 +11,7 @@ This is the speaker-facing script. `README.md` is the attendee-facing entrypoint
 1. Have .NET SDK 11.0.100 (or a newer patch of the 11.0.1xx feature band), Git, VS Code and GitHub Copilot available.
 2. Open the project using **Dev Containers: Reopen in Container**, or use a local terminal with SDK 11 already installed.
 3. Check `dotnet --info` and `dotnet --list-sdks`.
-4. Execute `bash scripts/validate.sh` (PowerShell: `./scripts/validate.ps1`).
+4. Run `dotnet tool restore` and `dotnet csharpier --version` to show that the formatter version is reproducible. Then execute `bash scripts/validate.sh` (PowerShell: `./scripts/validate.ps1`).
 5. Run `dotnet run --project src/Orders.Api --urls http://localhost:5080` in a dedicated terminal.
 6. Verify `curl http://localhost:5080/health`.
 7. Prepare two copies of the repo or two clean branches if you want to contrast agent behavior; resetting modifications during a live demo must not delete unexpected changes.
@@ -24,6 +24,8 @@ This is the speaker-facing script. `README.md` is the attendee-facing entrypoint
 
 ```bash
 dotnet --info
+dotnet tool restore
+dotnet csharpier --version
 dotnet restore DotNetConf26.slnx
 dotnet build DotNetConf26.slnx
 dotnet test DotNetConf26.slnx
@@ -73,13 +75,16 @@ Live question:
 - `Directory.Build.targets`: executable checks on project settings.
 - `Directory.Packages.props`: centrally pinned NuGet versions.
 - `.editorconfig`: code style.
-- `.config/dotnet-tools.json`: a versioned tool manifest (currently empty intentionally; no extra CLI is needed).
+- `.config/dotnet-tools.json`: CSharpier **1.4.0** pinned as a local tool; no global install.
+- Show `dotnet tool restore` and `dotnet csharpier --version`. Optionally format a small C# file with `dotnet csharpier format <file>` and verify it with `dotnet csharpier check <file>`.
 - `.devcontainer/devcontainer.json` + Dockerfile: SDK and editor extensions, forwarded port.
 
 **Command:**
 
 ```bash
 dotnet --version
+dotnet tool restore
+dotnet csharpier --version
 dotnet build DotNetConf26.slnx
 ```
 
@@ -143,6 +148,9 @@ Do not rubber-stamp the generated code. Ask the agent to correct substantive iss
 
 ```bash
 bash scripts/validate.sh
+# Optional formatting validation after explicitly formatting the changed files:
+# dotnet csharpier format src tests
+# dotnet csharpier check src tests
 git diff --stat
 git diff -- src/Orders.Domain src/Orders.Application src/Orders.Api tests
 ```
