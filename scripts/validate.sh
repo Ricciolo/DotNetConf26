@@ -5,6 +5,7 @@ cd "$ROOT"
 echo "[1/4] Restore local .NET tools (pinned in .config/dotnet-tools.json)"
 dotnet tool restore
 dotnet csharpier --version
+dotnet ef --version
 echo "[2/4] Restore solution"
 dotnet restore DotNetConf26.slnx
 echo "[3/4] Build (warnings as errors)"

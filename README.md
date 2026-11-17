@@ -10,7 +10,7 @@ Mostra come contesto, ambiente riproducibile e controlli eseguibili aiutino gli 
 - Progetti Domain, Application, Infrastructure e API
 - Test unitari, di integrazione e architetturali con xUnit
 - Central Package Management e configurazioni MSBuild condivise
-- CSharpier 1.4.0 come tool locale versionato
+- CSharpier 1.4.0 e dotnet-ef 11.0.0 come strumenti CLI locali versionati
 - Dev Container per VS Code, Agent Skills e agente specializzato nella revisione
 
 ## Avvio rapido
@@ -20,6 +20,7 @@ Installa l'SDK .NET 11.0.100 oppure apri il repository nel Dev Container.
 ```bash
 dotnet tool restore
 dotnet csharpier --version
+dotnet ef --version
 dotnet restore DotNetConf26.slnx
 dotnet build DotNetConf26.slnx
 dotnet test DotNetConf26.slnx --no-build
@@ -40,15 +41,18 @@ I dati sono conservati soltanto in memoria e vengono persi al riavvio. Non sono 
 
 ## Tool CLI condivisi
 
-`.config/dotnet-tools.json` fissa **CSharpier 1.4.0**, in modo che sviluppatori, agenti e CI possano utilizzare lo stesso formatter senza installazione globale:
+`.config/dotnet-tools.json` fissa **CSharpier 1.4.0** e **dotnet-ef 11.0.0**, così sviluppatori, agenti e CI possono utilizzare le stesse versioni senza installazioni globali:
 
 ```bash
 dotnet tool restore
+dotnet ef --version
 dotnet csharpier format src tests
 dotnet csharpier check src tests
 ```
 
-Gli script `scripts/validate.sh` e `scripts/validate.ps1` ripristinano il formatter ed eseguono build e test. Il controllo del formato è attualmente separato dalla CI: sul campione iniziale potrebbe essere necessario eseguire `format` prima di `check`.
+Gli script `scripts/validate.sh` e `scripts/validate.ps1` ripristinano entrambi i tool, ne verificano l'esecuzione ed effettuano build e test.
+
+**Nota:** l'esempio usa un archivio in memoria e non contiene un `DbContext` EF Core. `dotnet ef` è disponibile come strumento CLI, ma per usare migrazioni e comandi sui database in un progetto occorre configurare Entity Framework Core e il relativo pacchetto `Microsoft.EntityFrameworkCore.Design`. Il controllo del formato è attualmente separato dalla CI: sul campione iniziale potrebbe essere necessario eseguire `format` prima di `check`.
 
 ## Guida per la conferenza
 

@@ -11,7 +11,7 @@ Questo file è il copione dello speaker. Il `README.md` è invece il punto di in
 1. Verifica la disponibilità di .NET SDK 11.0.100 (o patch successive della banda 11.0.1xx), Git, VS Code e GitHub Copilot.
 2. Apri il progetto con **Dev Containers: Reopen in Container**, oppure usa il terminale locale con SDK 11 già installato.
 3. Controlla `dotnet --info` e `dotnet --list-sdks`.
-4. Esegui `dotnet tool restore` e `dotnet csharpier --version` per mostrare la versione riproducibile del formatter. Poi esegui `bash scripts/validate.sh` (oppure `./scripts/validate.ps1` in PowerShell).
+4. Esegui `dotnet tool restore`, `dotnet csharpier --version` e `dotnet ef --version` per mostrare le versioni riproducibili degli strumenti CLI. Poi esegui `bash scripts/validate.sh` (oppure `./scripts/validate.ps1` in PowerShell).
 5. In un terminale dedicato avvia `dotnet run --project src/Orders.Api --urls http://localhost:5080`.
 6. Verifica `curl http://localhost:5080/health`.
 7. Se vuoi confrontare agenti con e senza istruzioni, prepara due copie o due branch puliti. Evita operazioni di reset che possano cancellare lavoro non previsto.
@@ -27,6 +27,7 @@ Questo file è il copione dello speaker. Il `README.md` è invece il punto di in
 dotnet --info
 dotnet tool restore
 dotnet csharpier --version
+dotnet ef --version
 dotnet restore DotNetConf26.slnx
 dotnet build DotNetConf26.slnx
 dotnet test DotNetConf26.slnx
@@ -84,7 +85,7 @@ Tre domande fondamentali per un agente:
 - `Directory.Build.targets`: controlli obbligatori sulle proprietà dei progetti.
 - `Directory.Packages.props`: versioni centralizzate dei pacchetti NuGet.
 - `.editorconfig`: convenzioni di stile.
-- `.config/dotnet-tools.json`: tool locale **CSharpier 1.4.0**, senza installazione globale.
+- `.config/dotnet-tools.json`: tool locali **CSharpier 1.4.0** e **dotnet-ef 11.0.0**, senza installazione globale.
 - `.devcontainer/devcontainer.json` e Dockerfile: SDK, estensioni e porta esposta.
 
 **Comandi per la dimostrazione:**
@@ -93,12 +94,13 @@ Tre domande fondamentali per un agente:
 dotnet --version
 dotnet tool restore
 dotnet csharpier --version
+dotnet ef --version
 dotnet build DotNetConf26.slnx
 ```
 
 **Facoltativo:** mostra la differenza tra `dotnet csharpier format <file>` e `dotnet csharpier check <file>`, utilizzando un file modificato appositamente.
 
-**Messaggio da sottolineare:** `global.json` stabilisce l'SDK; `Directory.Packages.props` stabilisce le versioni delle librerie; `dotnet-tools.json` stabilisce la versione degli strumenti CLI.
+**Messaggio da sottolineare:** `global.json` stabilisce l'SDK; `Directory.Packages.props` stabilisce le versioni delle librerie; `dotnet-tools.json` stabilisce la versione degli strumenti CLI (CSharpier e dotnet-ef).
 
 Un Dev Container offre un ambiente riproducibile, **non automaticamente** una barriera di sicurezza o un modello di autorizzazione per gli agenti. Alcuni runtime agentici possono supportarlo diversamente.
 

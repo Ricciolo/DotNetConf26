@@ -32,6 +32,7 @@ Approfondimenti: `docs/architecture.md`, `docs/domain.md`, `docs/testing.md`.
 - Versioni NuGet centralizzate in `Directory.Packages.props`; non inserire l'attributo `Version` nei `PackageReference` dei progetti.
 - Convenzioni C# e formattazione in `.editorconfig`.
 - CSharpier 1.4.0 è fissato da `.config/dotnet-tools.json`. Ripristinalo con `dotnet tool restore`; usa `dotnet csharpier format src tests` per formattare e `dotnet csharpier check src tests` per controllare. Non richiedere un'installazione globale.
+- Anche `dotnet-ef` 11.0.0 è fissato nello stesso manifest e disponibile tramite `dotnet ef`. Il progetto dimostrativo usa però storage in memoria: non creare migrazioni o aggiungere Entity Framework Core se il task non lo richiede.
 - Non disabilitare analyzer, modificare SDK/TFM o indebolire i test soltanto per ottenere un esito positivo.
 
 ## Skill e agenti specializzati
