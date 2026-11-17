@@ -43,7 +43,7 @@ app.MapPost("/orders", async (
     catch (DomainRuleException exception)
     {
         return Results.Problem(
-            title: "Order validation failed",
+            title: "Validazione dell'ordine non riuscita",
             detail: exception.Message,
             statusCode: StatusCodes.Status400BadRequest);
     }
@@ -51,5 +51,5 @@ app.MapPost("/orders", async (
 
 app.Run();
 
-// Enables WebApplicationFactory<Program> for integration tests.
+// Consente l'uso di WebApplicationFactory<Program> nei test di integrazione.
 public partial class Program { }

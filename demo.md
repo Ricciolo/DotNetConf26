@@ -1,26 +1,27 @@
-# Live demo script: Agent-ready .NET repository
+# Demo dal vivo: repository .NET agent-ready
 
-**Event:** .NET Conference Italia 2026, 18 November 2026  
-**Session:** GitHub Copilot e .NET: progettare un repository per lo sviluppo agentico  
-**Duration:** 45 minutes
+**Evento:** .NET Conference Italia 2026, 18 novembre 2026  
+**Sessione:** GitHub Copilot e .NET: progettare un repository per lo sviluppo agentico  
+**Durata:** 45 minuti, inclusi circa 14 minuti di demo.
 
-This is the speaker-facing script. `README.md` is the attendee-facing entrypoint.
+Questo file è il copione dello speaker. Il `README.md` è invece il punto di ingresso per chi scarica il repository.
 
-## 0. Preparation before going on stage (not counted in 45 minutes)
+## 0. Preparazione prima di salire sul palco (fuori dai 45 minuti)
 
-1. Have .NET SDK 11.0.100 (or a newer patch of the 11.0.1xx feature band), Git, VS Code and GitHub Copilot available.
-2. Open the project using **Dev Containers: Reopen in Container**, or use a local terminal with SDK 11 already installed.
-3. Check `dotnet --info` and `dotnet --list-sdks`.
-4. Run `dotnet tool restore` and `dotnet csharpier --version` to show that the formatter version is reproducible. Then execute `bash scripts/validate.sh` (PowerShell: `./scripts/validate.ps1`).
-5. Run `dotnet run --project src/Orders.Api --urls http://localhost:5080` in a dedicated terminal.
-6. Verify `curl http://localhost:5080/health`.
-7. Prepare two copies of the repo or two clean branches if you want to contrast agent behavior; resetting modifications during a live demo must not delete unexpected changes.
-8. Keep this file visible as a speaker checklist; enlarge the terminal font.
-9. Test the Copilot runtime and the available skill invocation syntax in the exact VS Code version used on stage. Experimental features are not guaranteed.
+1. Verifica la disponibilità di .NET SDK 11.0.100 (o patch successive della banda 11.0.1xx), Git, VS Code e GitHub Copilot.
+2. Apri il progetto con **Dev Containers: Reopen in Container**, oppure usa il terminale locale con SDK 11 già installato.
+3. Controlla `dotnet --info` e `dotnet --list-sdks`.
+4. Esegui `dotnet tool restore` e `dotnet csharpier --version` per mostrare la versione riproducibile del formatter. Poi esegui `bash scripts/validate.sh` (oppure `./scripts/validate.ps1` in PowerShell).
+5. In un terminale dedicato avvia `dotnet run --project src/Orders.Api --urls http://localhost:5080`.
+6. Verifica `curl http://localhost:5080/health`.
+7. Se vuoi confrontare agenti con e senza istruzioni, prepara due copie o due branch puliti. Evita operazioni di reset che possano cancellare lavoro non previsto.
+8. Tieni aperto questo file come checklist e aumenta la dimensione del font del terminale.
+9. Prova la versione reale di VS Code/Copilot che utilizzerai sul palco: l'invocazione manuale delle skill e le funzionalità sperimentali possono cambiare.
+10. Prepara una versione già completata della funzionalità di annullamento, da mostrare come piano alternativo se la generazione live richiede troppo tempo.
 
-**Important:** Do not claim the basic sample has no instructions. It already contains them. For a true baseline comparison, create a disposable branch/worktree in which guidance is intentionally removed and document what was removed; otherwise describe the first example as illustrative, not an A/B test.
+**Attenzione:** il repository iniziale contiene già istruzioni e skill. Non presentare quindi l'esecuzione iniziale come un test senza contesto. Per un vero confronto, crea una copia di lavoro senza i file di guidance e dichiara esattamente quali hai rimosso. In alternativa usa un confronto puramente illustrativo.
 
-### Useful commands
+### Comandi utili
 
 ```bash
 dotnet --info
@@ -34,52 +35,59 @@ dotnet run --project src/Orders.Api --urls http://localhost:5080
 curl http://localhost:5080/health
 ```
 
-## 1. Opening: the problem (0:00–5:00)
+## 1. Introduzione: il problema (00:00–05:00)
 
-**Slide/message:** Compiling code is not the same as respecting a software system.
+**Messaggio da trasmettere:** codice che compila non significa codice coerente con il progetto.
 
-Explain the three questions an agent must answer:
-- How is this repository structured and why?
-- In which environment can I run and test it?
-- How do I know the change is actually correct?
+Tre domande fondamentali per un agente:
 
-**Show:** `src/`, `tests/`, existing `POST /orders`, `GET /orders` and `GET /orders/{id}`.
+- Come è organizzato il repository e perché?
+- Dove può eseguire il codice e i test?
+- Come può dimostrare che una modifica è corretta?
 
-Prompt idea (read-only):
+**Mostra:** `src/`, `tests/`, gli endpoint già disponibili `POST /orders`, `GET /orders` e `GET /orders/{id}`.
 
-> Inspect this repository and explain its project boundaries, how an order is created and what checks prove the change is correct. Do not modify files.
+**Prompt da incollare (sola analisi):**
 
-Expected: the agent identifies the Domain, Application, Infrastructure and API layers and references repository docs and tests.
+> Analizza questo repository senza modificare alcun file. Spiega in italiano quali sono i confini tra i progetti, come avviene la creazione di un ordine e quali controlli verificano che le modifiche rispettino l'architettura. Cita i percorsi dei file da cui ricavi le informazioni.
 
-## 2. Give the agent the right context (5:00–13:00)
+**Risultato atteso:** l'agente identifica i layer Domain, Application, Infrastructure e API, rimandando ai documenti e ai test pertinenti.
 
-**Show in this order:**
-1. `AGENTS.md` as a brief, portable entrypoint.
-2. `.github/copilot-instructions.md` for Copilot guidance.
-3. `.github/instructions/csharp.instructions.md` scoped to C# files.
-4. `docs/architecture.md`, `docs/domain.md` and one ADR.
+## 2. Dare contesto all'agente (05:00–13:00)
 
-**Explain:** Keep short persistent instructions; put detailed information close to the relevant work. Avoid copying the same guidance into every file. Instructions are not enforcement.
+**Apri in quest'ordine:**
 
-Live question:
+1. `AGENTS.md`, punto di ingresso condiviso tra agenti.
+2. `.github/copilot-instructions.md`, istruzioni specifiche per Copilot.
+3. `.github/instructions/csharp.instructions.md`, istruzioni applicate ai file C#.
+4. `docs/architecture.md`, `docs/domain.md` e una ADR in `docs/adr/`.
 
-> Which files define the architectural and domain rules, and which rules are checked automatically? Answer with paths, not guesses.
+**Concetti da raccontare:**
 
-**Transition:** The repository should also reproduce the toolchain an agent needs.
+- Istruzioni brevi, persistenti e facilmente individuabili.
+- Documentazione approfondita caricata soltanto quando necessaria.
+- Separazione tra indicazioni testuali e regole verificabili.
+- Niente duplicazione della stessa regola in ogni file.
 
-## 3. Make .NET reproducible (13:00–20:00)
+**Secondo prompt (sola analisi):**
 
-**Show:**
-- `global.json`: SDK feature band and patch roll-forward.
-- `Directory.Build.props`: nullable, analyzers, warnings-as-errors, deterministic compilation.
-- `Directory.Build.targets`: executable checks on project settings.
-- `Directory.Packages.props`: centrally pinned NuGet versions.
-- `.editorconfig`: code style.
-- `.config/dotnet-tools.json`: CSharpier **1.4.0** pinned as a local tool; no global install.
-- Show `dotnet tool restore` and `dotnet csharpier --version`. Optionally format a small C# file with `dotnet csharpier format <file>` and verify it with `dotnet csharpier check <file>`.
-- `.devcontainer/devcontainer.json` + Dockerfile: SDK and editor extensions, forwarded port.
+> Individua le regole architetturali e di dominio presenti nel repository. Per ciascuna, indica se è soltanto documentata oppure se esiste un test o una regola di build che ne verifica il rispetto. Riporta i percorsi esatti.
 
-**Command:**
+**Passaggio narrativo:** conoscere il progetto non basta se manca l'ambiente per eseguirlo.
+
+## 3. Toolchain .NET riproducibile (13:00–20:00)
+
+**File da mostrare:**
+
+- `global.json`: banda dell'SDK .NET e aggiornamenti patch.
+- `Directory.Build.props`: nullable, analyzer, warning come errori, compilazione deterministica.
+- `Directory.Build.targets`: controlli obbligatori sulle proprietà dei progetti.
+- `Directory.Packages.props`: versioni centralizzate dei pacchetti NuGet.
+- `.editorconfig`: convenzioni di stile.
+- `.config/dotnet-tools.json`: tool locale **CSharpier 1.4.0**, senza installazione globale.
+- `.devcontainer/devcontainer.json` e Dockerfile: SDK, estensioni e porta esposta.
+
+**Comandi per la dimostrazione:**
 
 ```bash
 dotnet --version
@@ -88,115 +96,132 @@ dotnet csharpier --version
 dotnet build DotNetConf26.slnx
 ```
 
-**Explain:** Dev Containers are a reproducible developer environment, not automatically an isolation or authorization boundary for agents. Host, container and background-agent integrations may have different support.
+**Facoltativo:** mostra la differenza tra `dotnet csharpier format <file>` e `dotnet csharpier check <file>`, utilizzando un file modificato appositamente.
 
-## 4. Skills as reusable workflows (20:00–28:00)
+**Messaggio da sottolineare:** `global.json` stabilisce l'SDK; `Directory.Packages.props` stabilisce le versioni delle librerie; `dotnet-tools.json` stabilisce la versione degli strumenti CLI.
 
-**Show:**
+Un Dev Container offre un ambiente riproducibile, **non automaticamente** una barriera di sicurezza o un modello di autorizzazione per gli agenti. Alcuni runtime agentici possono supportarlo diversamente.
+
+## 4. Agent Skills e procedure riutilizzabili (20:00–28:00)
+
+**Mostra in sequenza:**
+
 1. `.github/skills/implement-dotnet-feature/SKILL.md`.
-2. Its `references/`, `scripts/` and `assets/` folders.
-3. `.github/skills/validate-dotnet-architecture/SKILL.md` and its checks.
-4. `.github/agents/dotnet-reviewer.agent.md` as a specialist.
+2. Le sue directory `references/`, `scripts/` e `assets/`.
+3. `.github/skills/validate-dotnet-architecture/SKILL.md`.
+4. `.github/agents/dotnet-reviewer.agent.md`, agente specializzato nella revisione.
 
-**Explain:** Skill discovery reads metadata, activation loads instructions, supporting references/scripts are loaded on demand (progressive disclosure). Distinguish the Agent Skills specification from VS Code-specific frontmatter. Only mention Skills over MCP as an emerging preview, without demo.
+**Messaggi chiave:**
 
-Run:
+- **Discovery:** metadati come nome e descrizione della skill.
+- **Activation:** caricamento del contenuto di `SKILL.md` quando pertinente.
+- **Resources:** riferimenti, template e script caricati quando servono.
+- **Execution:** uso degli strumenti effettivamente disponibili.
+- **Composizione:** lo stesso agente può riutilizzare skill diverse.
+
+Distingui le proprietà della specifica Agent Skills dalle estensioni di Copilot/VS Code. Cita **Skills over MCP** soltanto come evoluzione sperimentale, senza demo.
+
+**Comando:**
 
 ```bash
 bash .github/skills/validate-dotnet-architecture/scripts/check-architecture.sh
 ```
 
-Suggested prompt:
+**Prompt per preparare il task, senza modifiche:**
 
-> Read the implement-dotnet-feature skill and its feature checklist. Tell me which source files and test suites would change to implement order cancellation, but do not code yet.
+> Leggi la skill `implement-dotnet-feature` e la relativa checklist. Basandoti sulle regole presenti in `docs/domain.md`, elenca i progetti, le classi e le suite di test che dovremo modificare per implementare l'annullamento di un ordine. Non scrivere ancora codice. Rispondi in italiano.
 
-## 5. End-to-end agent demo (28:00–42:00)
+## 5. Demo completa: implementazione dell'annullamento (28:00–42:00)
 
-**Goal:** Implement order cancellation, the deliberately missing feature described in `docs/domain.md`.
+**Obiettivo:** aggiungere l'annullamento di un ordine, funzionalità intenzionalmente mancante e documentata in `docs/domain.md`.
 
-### Step A: Inspect the initial behavior
+### Passo A. Osservare il comportamento iniziale
+
+Avvia l'API e crea un ordine:
 
 ```bash
 curl -i -X POST http://localhost:5080/orders \
   -H "Content-Type: application/json" \
-  -d '{"customer":"Ada","lines":[{"sku":"BOOK","quantity":2,"unitPrice":12.50}]}'
+  -d '{"customer":"Ada","lines":[{"sku":"LIBRO","quantity":2,"unitPrice":12.50}]}'
 ```
 
-Copy the returned `id`. Before implementation, `POST /orders/{id}/cancel` is not mapped.
+Copia l'`id` restituito. Prima dell'implementazione, l'endpoint `POST /orders/{id}/cancel` non esiste.
 
-### Step B: Give the implementation task to Copilot
+### Passo B. Assegnare il task a Copilot
 
-Prompt to paste:
+**Prompt completo da incollare:**
 
-> Implement order cancellation in this repository using the `implement-dotnet-feature` skill. Follow `AGENTS.md` and the domain rules. Add `POST /orders/{id:guid}/cancel`: a submitted order becomes Cancelled; unknown IDs return 404; cancelling twice returns 409. Put the invariant in Domain, orchestrate it in Application, keep HTTP mapping in API, and add unit and integration tests. Do not weaken architecture rules or introduce dependencies. Run the validation script and report the actual results.
+> Implementa l'annullamento degli ordini in questo repository utilizzando la skill `implement-dotnet-feature`. Segui `AGENTS.md`, `docs/domain.md` e le convenzioni esistenti. Aggiungi l'endpoint `POST /orders/{id:guid}/cancel` con queste regole: un ordine nello stato `Submitted` diventa `Cancelled`; un identificativo inesistente restituisce HTTP 404; un ordine già annullato restituisce HTTP 409. Implementa l'invariante nel Domain, coordina il caso d'uso in Application, mantieni nell'API soltanto la gestione HTTP e aggiungi test unitari e di integrazione. Non indebolire i vincoli architetturali e non introdurre pacchetti non necessari. Esegui lo script di validazione e riporta i risultati effettivi in italiano.
 
-If supported by the active agent harness, invoke `/implement-dotnet-feature` explicitly instead of relying on auto-selection.
+Se il runtime lo supporta, puoi usare l'invocazione esplicita `/implement-dotnet-feature` anziché affidarti alla selezione automatica.
 
-### Step C: Review the changed files
+### Passo C. Esaminare il codice generato
 
-Check for:
-- A Domain transition that rejects cancellation when the order is not Submitted.
-- An Application use case handling lookup and persistence responsibilities.
-- HTTP 404 and 409 mapping in API, without business logic embedded in the endpoint.
-- Unit tests for cancellation and double cancellation.
-- Integration tests for success, 404 and 409.
-- No new dependency in Domain or unauthorized NuGet package.
+Controlla con la platea:
 
-Do not rubber-stamp the generated code. Ask the agent to correct substantive issues.
+- La transizione di stato è implementata nel Domain?
+- Una seconda cancellazione viene rifiutata dall'invariante?
+- Application coordina il recupero dell'ordine e l'operazione?
+- L'API restituisce correttamente 404 e 409, senza contenere la regola di business?
+- Sono presenti test unitari e test di integrazione per successo, 404 e 409?
+- Sono state introdotte dipendenze non consentite o pacchetti inutili?
 
-### Step D: Validate
+**Non accettare il risultato soltanto perché compila.** Se emerge un errore sostanziale, chiedi all'agente una correzione mirata.
+
+### Passo D. Eseguire le verifiche
 
 ```bash
 bash scripts/validate.sh
-# Optional formatting validation after explicitly formatting the changed files:
+# Controllo facoltativo del formato, dopo aver formattato i file modificati:
 # dotnet csharpier format src tests
 # dotnet csharpier check src tests
 git diff --stat
 git diff -- src/Orders.Domain src/Orders.Application src/Orders.Api tests
 ```
 
-If tests fail, show the error and ask for a targeted fix. Do not alter guardrails merely to get a green build.
+Se un test fallisce, mostra l'errore e chiedi una correzione. Non modificare i guardrail soltanto per ottenere una build verde.
 
-### Step E: Exercise HTTP behavior
+### Passo E. Verificare gli endpoint HTTP
 
-Restart the API if needed. Create an order as in Step A and copy its ID.
+Se necessario, riavvia l'API. Crea un nuovo ordine con il comando del passo A e sostituisci il valore di `ID_ORDINE` con il GUID restituito.
 
 ```bash
-# Replace the placeholder with the actual returned order ID
-ORDER_ID="<guid-from-post-response>"
-curl -i -X POST "http://localhost:5080/orders/$ORDER_ID/cancel"
-curl -i -X POST "http://localhost:5080/orders/$ORDER_ID/cancel"
+ID_ORDINE="<guid-restituito-dalla-post>"
+curl -i -X POST "http://localhost:5080/orders/$ID_ORDINE/cancel"
+curl -i -X POST "http://localhost:5080/orders/$ID_ORDINE/cancel"
 curl -i -X POST "http://localhost:5080/orders/00000000-0000-0000-0000-000000000001/cancel"
 ```
 
-Expected after implementation: successful first cancellation; 409 on second attempt; 404 for missing order. The exact successful response format depends on the chosen contract.
+**Esiti attesi:** primo annullamento riuscito; secondo annullamento con HTTP 409; ordine inesistente con HTTP 404. Il codice preciso e il contenuto della prima risposta di successo dipendono dal contratto HTTP scelto nell'implementazione.
 
-### Step F: Ask the reviewer
+### Passo F. Coinvolgere il revisore
 
-> Review the cancellation implementation using the validate-dotnet-architecture skill. List correctness, architecture and testing findings with file paths. Run available checks and distinguish observed failures from risks.
+**Prompt di review:**
 
-### If time runs short
+> Effettua una revisione dell'implementazione dell'annullamento usando la skill `validate-dotnet-architecture`. Verifica correttezza funzionale, architettura, copertura dei test e convenzioni .NET. Riporta gli eventuali problemi in ordine di gravità, indicando file e correzioni. Esegui i controlli disponibili e distingui i problemi osservati dai rischi ipotetici. Rispondi in italiano.
 
-Use the prepared changed-file diff or show the test results captured during rehearsal. Do not assume an AI coding task completes in a predictable amount of time. The audience should see the completed concept, not an indefinitely running agent.
+### Piano alternativo se la demo richiede troppo tempo
 
-## 6. Conclusion (42:00–45:00)
+Mostra il diff di una versione già preparata e i risultati dei test ottenuti durante le prove. Non basare la durata dell'intervento sulla velocità di generazione dell'agente: il pubblico deve vedere il risultato e il processo di validazione.
+
+## 6. Conclusioni (42:00–45:00)
 
 ```text
-Instructions -> help the agent understand
-Skills       -> teach repeatable procedures
-Toolchain    -> makes the environment reproducible
-Tests        -> verify correctness
-Architecture -> constrains dependency direction
+Instructions  -> Comprensione del progetto
+Skills        -> Procedure riutilizzabili
+Toolchain     -> Ambiente riproducibile
+Tests         -> Verifica della correttezza
+Architecture  -> Vincoli sulle dipendenze
 ```
 
-**Takeaway:** An agent-ready repository is not just a folder with Markdown. It is an executable engineering contract.
+**Messaggio finale:** un repository agent-ready non è una cartella piena di file Markdown. È un contratto ingegneristico che può essere eseguito e verificato.
 
-Out of scope: Spec Kit, GitHub PR workflow deep dives, .NET Aspire and a live MCP server. Another conference session covers those topics.
+**Fuori perimetro:** Spec Kit, approfondimento dei workflow GitHub/PR, .NET Aspire e demo di server MCP. Sono temi trattati in altre sessioni.
 
-## Optional post-talk experiments (not part of the 45 minutes)
+## Esperimenti facoltativi dopo la conferenza
 
-- Compare a disposable worktree with and without instruction files, using the same feature request.
-- Split independent tasks across worktrees and compare merge conflict rates.
-- Make architecture rules stronger with additional forbidden dependency tests or analyzers.
-- Add a genuinely required local dotnet tool to `.config/dotnet-tools.json` and use `dotnet tool restore`.
-- Measure tokens, tool calls, time and validation failures across repeated runs rather than drawing statistical conclusions from one demo.
+- Confronta due worktree, uno con e uno senza istruzioni, sullo stesso task.
+- Distribuisci task indipendenti tra worktree diversi e misura i conflitti di integrazione.
+- Rafforza i test architetturali con ulteriori dipendenze vietate o analyzer.
+- Mostra `dotnet tool restore` con la versione già fissata di CSharpier in `.config/dotnet-tools.json`.
+- Confronta token, chiamate agli strumenti, durata, errori e test su **più esecuzioni**, senza trarre conclusioni statistiche da una sola demo.

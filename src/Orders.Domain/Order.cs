@@ -24,17 +24,17 @@ public sealed class Order
     {
         if (string.IsNullOrWhiteSpace(customer) || customer.Trim().Length > 120)
         {
-            throw new DomainRuleException("Customer must be between 1 and 120 characters.");
+            throw new DomainRuleException("Il nome del cliente deve contenere da 1 a 120 caratteri.");
         }
 
         if (lines is null || lines.Count is < 1 or > 100)
         {
-            throw new DomainRuleException("An order must contain between 1 and 100 lines.");
+            throw new DomainRuleException("Un ordine deve contenere da 1 a 100 righe.");
         }
 
         if (lines.GroupBy(line => line.Sku, StringComparer.OrdinalIgnoreCase).Any(group => group.Count() > 1))
         {
-            throw new DomainRuleException("Each SKU can appear only once in an order.");
+            throw new DomainRuleException("Ogni codice articolo (SKU) può comparire una sola volta nell'ordine.");
         }
 
         return new Order(Guid.NewGuid(), customer.Trim(), lines, createdAtUtc.ToUniversalTime());

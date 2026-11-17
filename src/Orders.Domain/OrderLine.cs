@@ -18,17 +18,17 @@ public sealed record OrderLine
     {
         if (string.IsNullOrWhiteSpace(sku) || sku.Trim().Length > 64)
         {
-            throw new DomainRuleException("SKU must be between 1 and 64 characters.");
+            throw new DomainRuleException("Il codice articolo (SKU) deve contenere da 1 a 64 caratteri.");
         }
 
         if (quantity <= 0)
         {
-            throw new DomainRuleException("Quantity must be positive.");
+            throw new DomainRuleException("La quantità deve essere maggiore di zero.");
         }
 
         if (unitPrice < 0)
         {
-            throw new DomainRuleException("Unit price cannot be negative.");
+            throw new DomainRuleException("Il prezzo unitario non può essere negativo.");
         }
 
         return new OrderLine(sku.Trim().ToUpperInvariant(), quantity, unitPrice);
