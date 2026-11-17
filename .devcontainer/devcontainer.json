@@ -25,5 +25,8 @@
         "dotnet.defaultSolution": "DotNetConf26.slnx"
       }
     }
+  },
+  "features": {
+    "ghcr.io/postfinance/devcontainer-features/docker-in:1": {}
   }
 }
