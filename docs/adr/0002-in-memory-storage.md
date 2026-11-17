@@ -1,15 +1,15 @@
-# ADR 0002: Use in-memory storage for the stage demo
+# ADR 0002: Persistenza in memoria per la demo
 
-**Status:** Accepted
+**Stato:** Accettata
 
-## Context
+## Contesto
 
-The talk is about repositories, agent guidance and validation, not SQL or distributed infrastructure.
+La sessione tratta repository, istruzioni per agenti e validazione, non SQL o infrastrutture distribuite.
 
-## Decision
+## Decisione
 
-Use a concurrent in-memory repository singleton. Avoid external dependencies and credentials.
+Usare un repository in memoria, thread-safe, registrato come singleton. Evitare dipendenze esterne e credenziali.
 
-## Consequences
+## Conseguenze
 
-The application can start with a single command. Data is lost at restart; persistence, migrations, authentication and production resilience are out of scope.
+L'applicazione può essere avviata con un solo comando. I dati si perdono al riavvio. Persistenza duratura, migrazioni, autenticazione e resilienza produttiva restano fuori dall'esempio.

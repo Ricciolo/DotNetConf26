@@ -1,24 +1,34 @@
-# Orders domain rules
+# Dominio: gestione degli ordini
 
-## Available in the initial sample
+Il progetto dimostra come gli agenti possano rispettare regole di business esplicite, verificabili tramite test.
 
-- Customer name must contain 1–120 non-whitespace characters.
-- An order must contain 1–100 lines.
-- SKU must contain 1–64 characters and is normalized to uppercase.
-- SKU is unique within an order, case-insensitively.
-- Quantity must be positive; unit price must not be negative.
-- Order total is calculated from line quantity times unit price.
-- A new order starts in `Submitted` state and has a UTC creation timestamp.
+## Regole già implementate
 
-## Live-demo feature, not yet implemented
+- **Cliente:** nome obbligatorio, da 1 a 120 caratteri, esclusi gli spazi iniziali e finali.
+- **Righe:** ogni ordine deve contenere da 1 a 100 righe.
+- **Codice articolo (SKU):** da 1 a 64 caratteri; viene normalizzato in maiuscolo.
+- **Unicità:** uno SKU può comparire una sola volta per ordine, senza distinzione tra maiuscole e minuscole.
+- **Quantità:** deve essere maggiore di zero.
+- **Prezzo unitario:** non può essere negativo.
+- **Totale ordine:** somma di quantità × prezzo unitario di ciascuna riga.
+- **Stato iniziale:** ogni nuovo ordine viene creato nello stato `Submitted` (inviato), con data e ora UTC.
 
-The speaker's exercise is to add **order cancellation**:
+## Funzionalità da implementare durante la demo: annullamento ordine
 
-- Only an order in `Submitted` state may be cancelled.
-- A successful cancellation changes status to `Cancelled`.
-- An unknown order ID must return HTTP 404.
-- A second cancellation of the same order must return HTTP 409.
-- Route: `POST /orders/{id:guid}/cancel`.
-- Existing routes and calculations must keep working.
+**Requisito:** permettere l'annullamento di un ordine già inviato.
 
-These requirements intentionally live in domain documentation and the feature skill, not in existing implementation.
+- Solo un ordine nello stato `Submitted` può essere annullato.
+- L'annullamento riuscito cambia lo stato in `Cancelled` (annullato).
+- Se l'ordine non esiste: **HTTP 404**.
+- Se l'ordine è già stato annullato: **HTTP 409**.
+- Endpoint da aggiungere: `POST /orders/{id:guid}/cancel`.
+- La creazione, l'elenco, il dettaglio e il calcolo dei totali devono continuare a funzionare.
+
+## Confini architetturali
+
+- **Domain:** controlla la transizione di stato e impedisce annullamenti non validi.
+- **Application:** coordina il caso d'uso e il recupero dell'ordine.
+- **Infrastructure:** mantiene i dettagli della persistenza, senza regole di business.
+- **API:** converte l'esito nei codici HTTP appropriati.
+
+Questi requisiti sono intenzionalmente documentati, ma **la cancellazione non è ancora implementata**: costituisce l'esercizio live con Copilot. I nomi dei tipi e dei valori enum esistenti restano in inglese per non modificare i contratti tecnici della solution.

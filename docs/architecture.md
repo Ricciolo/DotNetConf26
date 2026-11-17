@@ -1,43 +1,43 @@
-# Architecture
+# Architettura della soluzione
 
-This is a teaching-sized layered application, not a production reference architecture.
+Applicazione didattica a layer, volutamente piccola. Non è un'architettura di riferimento per la produzione.
 
 ```text
-HTTP client -> Orders.Api -> Orders.Application -> Orders.Domain
-                      |                ^
-                      v                |
-             Orders.Infrastructure ----+
+Client HTTP -> Orders.Api -> Orders.Application -> Orders.Domain
+                         |                   ^
+                         v                   |
+                Orders.Infrastructure -------+
 ```
 
-## Responsibilities
+## Responsabilità
 
-| Layer | Responsibility | References |
+| Layer | Responsabilità | Dipendenze |
 | --- | --- | --- |
-| Domain | Business invariants, Order, OrderLine | None |
-| Application | Create/list/find use cases, repository port | Domain |
-| Infrastructure | In-memory repository adapter | Application, Domain |
-| API | Minimal API routes, HTTP DTOs, composition root | Application, Infrastructure, Domain |
+| Domain | Entità, righe d'ordine e invarianti di business | Nessuna |
+| Application | Casi d'uso di creazione, elenco e dettaglio; interfaccia del repository | Domain |
+| Infrastructure | Repository in memoria | Application, Domain |
+| API | Minimal API, DTO HTTP, registrazione dei servizi | Application, Infrastructure, Domain |
 
-Dependency direction matters. `IOrderRepository` belongs to Application because it expresses what use cases need. Infrastructure implements that abstraction. API uses Domain only for translation at the boundary; no domain rules should live in API.
+La direzione delle dipendenze è importante. `IOrderRepository` appartiene ad Application perché rappresenta ciò che serve ai casi d'uso. Infrastructure implementa tale interfaccia. API usa Domain soltanto per tradurre gli errori al confine HTTP: gli invarianti non vanno nell'endpoint.
 
-## Architectural guardrails
+## Vincoli verificabili
 
-- `tests/Orders.ArchitectureTests` checks expected `ProjectReference` edges.
-- `Directory.Build.props` establishes the SDK target, nullability, analyzers and warnings-as-errors policy.
-- `Directory.Build.targets` fails when core repository settings are overridden.
-- `Directory.Packages.props` controls NuGet versions in one place.
-- `global.json` pins a .NET 11 SDK feature band with patch roll-forward.
+- `tests/Orders.ArchitectureTests`: verifica i `ProjectReference` consentiti.
+- `Directory.Build.props`: definisce target framework, nullability, analyzer e warning come errori.
+- `Directory.Build.targets`: interrompe la build in caso di impostazioni fondamentali non conformi.
+- `Directory.Packages.props`: centralizza le versioni dei pacchetti NuGet.
+- `global.json`: fissa la banda dell'SDK .NET 11, consentendo aggiornamenti patch.
 
-## Runtime choices
+## Scelte per l'esecuzione
 
-The API is stateless except for a thread-safe in-memory order repository registered as a singleton. Data disappears on process restart. No database or broker is used so the demo stays focused on repository engineering, not cloud infrastructure.
+L'API utilizza un repository in memoria, thread-safe, registrato come singleton. I dati non sopravvivono al riavvio. Non servono database, broker o credenziali: la demo resta concentrata sul repository, non sull'infrastruttura cloud.
 
-## What the agent must not do
+## Cosa l'agente non deve fare
 
-- Add a direct Domain -> Infrastructure dependency.
-- Put cancellation invariants in the HTTP endpoint.
-- Replace architecture tests with comments or delete failing tests.
-- Add another dependency injection framework without a concrete need.
-- Return success when validation commands have not been executed.
+- Aggiungere una dipendenza diretta da Domain verso Infrastructure.
+- Mettere le regole per annullare un ordine dentro l'endpoint HTTP.
+- Sostituire i test architetturali con commenti o eliminare i test falliti.
+- Introdurre un altro framework di dependency injection senza un motivo concreto.
+- Dichiarare una verifica riuscita senza averne eseguito i comandi.
 
-See `docs/adr/` for the trade-offs behind this design.
+Le decisioni e i compromessi sono descritti in `docs/adr/`.

@@ -1,22 +1,24 @@
-# Testing strategy
+# Strategia di test e validazione
 
-- `Orders.UnitTests`: fast domain invariants and business state.
-- `Orders.IntegrationTests`: in-process ASP.NET Core API tests using WebApplicationFactory.
-- `Orders.ArchitectureTests`: project-reference graph and selected compiled dependency checks.
+- `Orders.UnitTests`: invarianti di dominio e comportamento degli stati.
+- `Orders.IntegrationTests`: test dell'API ASP.NET Core in-process tramite `WebApplicationFactory`.
+- `Orders.ArchitectureTests`: dipendenze tra progetti e controlli su alcuni assembly compilati.
 
-Run:
+## Validazione completa
 
 ```bash
 bash scripts/validate.sh
 ```
 
-Or run a targeted suite:
+Per eseguire solo i test architetturali:
 
 ```bash
 dotnet test tests/Orders.ArchitectureTests/Orders.ArchitectureTests.csproj
 ```
 
-The repository also pins CSharpier 1.4.0 as a local tool in `.config/dotnet-tools.json`:
+## Formattazione riproducibile
+
+Il manifest `.config/dotnet-tools.json` fissa CSharpier 1.4.0 come tool locale:
 
 ```bash
 dotnet tool restore
@@ -24,10 +26,10 @@ dotnet csharpier format src tests
 dotnet csharpier check src tests
 ```
 
-The validation scripts restore and verify CSharpier, but formatting is currently an explicit separate check rather than a CI blocker. The initial sample may need `format` before running `check`.
+Gli script di validazione ripristinano e verificano il formatter, ma il controllo di formattazione non è ancora un blocco della CI. Sul codice iniziale potrebbe essere necessario eseguire `format` prima di `check`.
 
-Tests do not require an external database or Docker. The Dev Container improves reproducibility but is not necessary when .NET 11 is already installed.
+I test non richiedono database esterni né Docker. Il Dev Container offre riproducibilità, ma non è indispensabile se .NET 11 è già disponibile.
 
-When adding order cancellation, first create a failing domain test for the state transition, then implement the smallest change. Follow with API tests for success, 404 and 409.
+Per aggiungere l'annullamento, crea prima un test di dominio sulla transizione di stato; poi implementa il comportamento minimo. Aggiungi test API per il successo, HTTP 404 e HTTP 409.
 
-Never state that tests passed without an actual successful execution.
+Non dichiarare mai che i test sono passati senza averli eseguiti realmente.

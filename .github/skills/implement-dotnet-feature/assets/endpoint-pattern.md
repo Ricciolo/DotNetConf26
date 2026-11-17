@@ -1,6 +1,6 @@
-# HTTP endpoint pattern
+# Esempio di endpoint HTTP
 
-This is an illustrative shape, not a paste-ready implementation.
+Questa è una traccia illustrativa, non un'implementazione pronta da copiare.
 
 ```csharp
 app.MapPost("/resources/{id:guid}/action", async (
@@ -8,11 +8,11 @@ app.MapPost("/resources/{id:guid}/action", async (
     ResourceService service,
     CancellationToken cancellationToken) =>
 {
-    // Resolve the resource through the Application layer.
-    // Return 404 when absent.
-    // Convert domain rule conflicts to 409.
-    // Return a stable response contract.
+    // Recupera la risorsa attraverso il layer Application.
+    // Restituisci 404 se la risorsa non esiste.
+    // Converti eventuali conflitti di dominio in 409.
+    // Usa un contratto di risposta stabile.
 });
 ```
 
-Keep domain invariants in Domain. Handle business errors at the HTTP boundary. Test success and failure responses.
+Mantieni gli invarianti nel Domain. Gestisci gli errori di business al confine HTTP. Testa sia il successo sia i casi di errore.

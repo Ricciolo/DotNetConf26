@@ -1,15 +1,15 @@
-# ADR 0001: Layered architecture with explicit dependencies
+# ADR 0001: Architettura a layer e dipendenze esplicite
 
-**Status:** Accepted
+**Stato:** Accettata
 
-## Context
+## Contesto
 
-An agent can generate valid C# that violates existing design boundaries. We want a small application with boundaries clear enough to explain and verify.
+Un agente può generare codice C# corretto dal punto di vista sintattico, ma non rispettare i confini architetturali. Vogliamo un'applicazione piccola, con regole facili da spiegare e da verificare.
 
-## Decision
+## Decisione
 
-Use four projects: Domain, Application, Infrastructure and API. Keep interfaces with the consuming application layer. Test approved project-reference directions.
+Usare quattro progetti: Domain, Application, Infrastructure e API. Le interfacce sono definite nel layer applicativo che le utilizza. Verificare i riferimenti consentiti tramite test architetturali.
 
-## Consequences
+## Conseguenze
 
-Layer violations are discoverable by repeatable tests, rather than relying only on prompts. The extra projects are deliberate teaching overhead for a small example.
+Le violazioni diventano rilevabili da test ripetibili invece di dipendere soltanto dai prompt. La suddivisione in più progetti introduce complessità intenzionale, utile a scopo didattico.

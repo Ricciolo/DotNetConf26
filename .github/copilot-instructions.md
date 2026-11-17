@@ -1,7 +1,9 @@
-# GitHub Copilot repository guidance
+# Istruzioni GitHub Copilot per il repository
 
-Follow the repository contract in `AGENTS.md`. Before coding, read the relevant sections of `docs/architecture.md` and `docs/domain.md`.
+Segui il contratto contenuto in `AGENTS.md`. Prima di scrivere codice, consulta le sezioni pertinenti di `docs/architecture.md` e `docs/domain.md`.
 
-Prefer small, targeted diffs. Respect existing project boundaries. Do not add NuGet dependencies if the BCL already supplies what is needed. Each behavior change requires unit or integration tests.
+Preferisci modifiche piccole e mirate. Rispetta i confini tra i progetti. Non introdurre librerie NuGet se la libreria standard .NET offre già le funzionalità necessarie. Ogni modifica del comportamento richiede test unitari o di integrazione.
 
-Use the repository's Agent Skills for feature work or architectural review. Never say a validation succeeded unless its command was actually executed and returned successfully.
+Utilizza le Agent Skills presenti nel repository per implementare funzionalità o verificare l'architettura. Non dichiarare mai che una verifica è riuscita se non hai eseguito realmente il comando con esito positivo.
+
+Comunica con lo sviluppatore in italiano. Mantieni invariati nomi tecnici, namespace e contratti HTTP già definiti.
