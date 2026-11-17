@@ -58,6 +58,22 @@ Gli script `scripts/validate.sh` e `scripts/validate.ps1` ripristinano entrambi 
 
 Consulta **[demo.md](demo.md)** per tutti i passaggi, i prompt in italiano, i comandi e i piani alternativi per la dimostrazione dal vivo.
 
+## Agent Skills ufficiali Microsoft
+
+Sono incluse come **copie locali versionate** cinque skill tratte da [dotnet/skills](https://github.com/dotnet/skills), repository ufficiale del team .NET. Le copie originali, mantenute in inglese, sono disponibili in `.github/skills/` e possono essere individuate da Copilot nel contesto del progetto.
+
+| Skill | Utilizzo nel progetto |
+| --- | --- |
+| `dotnet-webapi` | Convenzioni e semantica HTTP per le Minimal API Orders |
+| `directory-build-organization` | `Directory.Build.props`, `Directory.Build.targets`, Central Package Management |
+| `property-patterns` | Condizioni e proprietà MSBuild |
+| `run-tests` | Comandi e modalità corrette per eseguire i test .NET |
+| `test-gap-analysis` | Individuazione di comportamenti non coperti dai test |
+
+**Provenienza:** [dotnet/skills, commit `2877c712`](https://github.com/dotnet/skills/tree/2877c712edc20643b72f64e2983b168e6661d607), licenza MIT conservata in [`.github/skills/LICENSE.dotnet-skills`](.github/skills/LICENSE.dotnet-skills). Queste copie non si aggiornano automaticamente. Le due skill `implement-dotnet-feature` e `validate-dotnet-architecture` rimangono personalizzate per Orders e non sono state sostituite.
+
+La copia nel repository è distinta dall'installazione dei plugin tramite marketplace a livello di utente: qui vogliamo che le skill siano disponibili e versionate insieme al codice, senza configurazioni personali.
+
 ## Contratto del repository
 
 - `AGENTS.md`: punto di ingresso e regole comuni per gli agenti.

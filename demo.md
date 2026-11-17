@@ -113,6 +113,16 @@ Un Dev Container offre un ambiente riproducibile, **non automaticamente** una ba
 3. `.github/skills/validate-dotnet-architecture/SKILL.md`.
 4. `.github/agents/dotnet-reviewer.agent.md`, agente specializzato nella revisione.
 
+**Skill ufficiali Microsoft da mostrare, senza caricarle tutte nel contesto contemporaneamente:**
+
+- `.github/skills/dotnet-webapi/SKILL.md`: endpoint Minimal API, semantica HTTP e DTO.
+- `.github/skills/directory-build-organization/SKILL.md`: file `.props`, `.targets` e `Directory.Packages.props`.
+- `.github/skills/property-patterns/SKILL.md`: condizioni e impostazioni MSBuild.
+- `.github/skills/run-tests/SKILL.md`: esecuzione corretta dei test .NET.
+- `.github/skills/test-gap-analysis/SKILL.md`: lacune nella copertura dei comportamenti, utile per l'annullamento.
+
+Le copie sono tratte dal repository Microsoft `dotnet/skills`, rimangono in inglese e sono vincolate al commit indicato nel README. **Non sostituiscono** le skill specifiche Orders scritte in italiano.
+
 **Messaggi chiave:**
 
 - **Discovery:** metadati come nome e descrizione della skill.

@@ -40,6 +40,8 @@ Approfondimenti: `docs/architecture.md`, `docs/domain.md`, `docs/testing.md`.
 - Per sviluppare funzionalità usa `.github/skills/implement-dotnet-feature/SKILL.md`.
 - Per verificare l'architettura usa `.github/skills/validate-dotnet-architecture/SKILL.md`.
 - `.github/agents/dotnet-reviewer.agent.md` definisce un agente specializzato nella revisione.
+- Skill ufficiali Microsoft, copiate in `.github/skills/`: `dotnet-webapi` (API HTTP), `directory-build-organization` e `property-patterns` (MSBuild), `run-tests` e `test-gap-analysis` (test e copertura dei comportamenti). La provenienza e la licenza MIT sono documentate in `README.md` e `.github/skills/LICENSE.dotnet-skills`.
+- Le skill ufficiali sono supporto specialistico: in caso di conflitto, prevalgono i requisiti del task e le regole architetturali specifiche di `AGENTS.md`, `docs/domain.md` e delle skill locali. Non attivare skill non pertinenti né introdurre EF Core solo perché è disponibile `dotnet-ef`.
 
 ## Lingua e sicurezza
 

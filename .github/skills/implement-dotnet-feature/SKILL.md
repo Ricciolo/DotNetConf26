@@ -22,6 +22,14 @@ Leggi prima `AGENTS.md`. Carica solo i riferimenti pertinenti alla richiesta. Sc
 7. Esegui `scripts/validate.sh` di questa skill o l'equivalente PowerShell del repository.
 8. Riepiloga le modifiche, i risultati dei test e gli eventuali problemi residui.
 
+## Skill ufficiali complementari
+
+- Per progettare o aggiornare endpoint ASP.NET Core, consulta `../dotnet-webapi/SKILL.md`, seguendo prima di tutto l'architettura e i contratti esistenti.
+- Prima di eseguire i test, consulta `../run-tests/SKILL.md` per identificare il comando compatibile con la solution.
+- Quando serve verificare se i test coprono davvero una regola di business, consulta `../test-gap-analysis/SKILL.md`.
+
+Le skill Microsoft sono indicazioni specialistiche generali; `AGENTS.md`, `docs/domain.md` e i test di questo repository prevalgono in caso di conflitto.
+
 ## Vincoli
 
 - Non implementare invarianti di business soltanto nell'API.

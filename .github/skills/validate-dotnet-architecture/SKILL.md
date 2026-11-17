@@ -16,3 +16,12 @@ metadata:
 5. Riporta in italiano i comandi eseguiti, i risultati e gli eventuali limiti della verifica.
 
 Non modificare silenziosamente `Directory.Build.props`, `Directory.Build.targets`, `global.json` o `Directory.Packages.props` per ottenere una build positiva.
+## Competenze Microsoft correlate
+
+- `../directory-build-organization/SKILL.md`: organizzazione dei file `.props`, `.targets` e del Central Package Management.
+- `../property-patterns/SKILL.md`: problemi specifici di valori e condizioni MSBuild.
+- `../run-tests/SKILL.md`: comandi corretti per l'esecuzione dei test.
+- `../test-gap-analysis/SKILL.md`: verifica di comportamenti non coperti quando esplicitamente richiesta.
+
+Non caricare tutte le skill contemporaneamente: seleziona quelle pertinenti al problema. Le regole di dipendenza specifiche di Orders restano vincolanti.
+
